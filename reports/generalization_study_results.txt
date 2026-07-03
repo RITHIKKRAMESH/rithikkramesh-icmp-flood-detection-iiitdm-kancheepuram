@@ -1,0 +1,183 @@
+================================================================================
+BINARY GENERALIZATION STUDY RESULT LOG (DATASET B3)
+================================================================================
+SCENARIO A: Models trained on A3 (binary) evaluated on B3 (binary)
+
+--------------------------------------------------------------------------------
+MODEL: Random Forest (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 71.89%
+Macro F1-Score        : 0.7165
+
+Confusion Matrix:
+[[170145  39855]
+ [ 78204 131796]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.6851    0.8102    0.7424    210000
+      attack     0.7678    0.6276    0.6907    210000
+
+    accuracy                         0.7189    420000
+   macro avg     0.7265    0.7189    0.7165    420000
+weighted avg     0.7265    0.7189    0.7165    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: XGBoost (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 64.80%
+Macro F1-Score        : 0.5983
+
+Confusion Matrix:
+[[ 62172 147828]
+ [     0 210000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.2961    0.4569    210000
+      attack     0.5869    1.0000    0.7397    210000
+
+    accuracy                         0.6480    420000
+   macro avg     0.7934    0.6480    0.5983    420000
+weighted avg     0.7934    0.6480    0.5983    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: LightGBM (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 73.61%
+Macro F1-Score        : 0.7163
+
+Confusion Matrix:
+[[ 99156 110844]
+ [     0 210000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.4722    0.6415    210000
+      attack     0.6545    1.0000    0.7912    210000
+
+    accuracy                         0.7361    420000
+   macro avg     0.8273    0.7361    0.7163    420000
+weighted avg     0.8273    0.7361    0.7163    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: CatBoost (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 48.63%
+Macro F1-Score        : 0.4690
+
+Confusion Matrix:
+[[ 64247 145753]
+ [ 70000 140000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.4786    0.3059    0.3733    210000
+      attack     0.4899    0.6667    0.5648    210000
+
+    accuracy                         0.4863    420000
+   macro avg     0.4843    0.4863    0.4690    420000
+weighted avg     0.4843    0.4863    0.4690    420000
+
+
+
+================================================================================
+SCENARIO B: Models trained directly on B3 evaluated on B3 test split
+
+--------------------------------------------------------------------------------
+MODEL: Random Forest (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 54.25%
+Macro F1-Score     : 0.3517
+
+Confusion Matrix:
+[[45572 38428]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.5425    0.7034     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.5425     84000
+   macro avg     0.5000    0.2713    0.3517     84000
+weighted avg     1.0000    0.5425    0.7034     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: XGBoost (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 14.83%
+Macro F1-Score     : 0.1292
+
+Confusion Matrix:
+[[12461 71539]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.1483    0.2584     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.1483     84000
+   macro avg     0.5000    0.0742    0.1292     84000
+weighted avg     1.0000    0.1483    0.2584     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: LightGBM (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 58.75%
+Macro F1-Score     : 0.3701
+
+Confusion Matrix:
+[[49348 34652]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.5875    0.7401     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.5875     84000
+   macro avg     0.5000    0.2937    0.3701     84000
+weighted avg     1.0000    0.5875    0.7401     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: CatBoost (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 17.30%
+Macro F1-Score     : 0.1475
+
+Confusion Matrix:
+[[14536 69464]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.1730    0.2950     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.1730     84000
+   macro avg     0.5000    0.0865    0.1475     84000
+weighted avg     1.0000    0.1730    0.2950     84000
+
+

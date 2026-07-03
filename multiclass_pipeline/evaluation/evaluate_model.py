@@ -15,7 +15,7 @@ from sklearn.metrics import (
 # PATHS
 # ==========================================================
 
-MODEL_PATH = "models/random_forest.pkl"
+MODEL_PATH = "models/random_forest=.pkl"
 
 X_TEST_PATH = "training/training_data/X_test.csv"
 Y_TEST_PATH = "training/training_data/y_test.csv"

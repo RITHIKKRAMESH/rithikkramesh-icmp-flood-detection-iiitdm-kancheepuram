@@ -15,8 +15,8 @@ from sklearn.metrics import (
 # ==========================================================
 
 MAPPED_DATASET_PATH = "dataset_B/output/mapped_features_B.csv"
-ENCODER_PATH = "models/label_encoder.pkl"
-OUTPUT_DIR = "dataset_B/output"
+ENCODER_PATH = "multiclass_pipeline/models/label_encoder.pkl"
+OUTPUT_DIR = "multiclass_pipeline/dataset_B/output"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -38,24 +38,48 @@ if "label" not in df.columns:
 X = df.drop(columns=["label"])
 y_true_raw = df["label"]
 
+# Normalize labels: map any normal variant to lowercase 'benign' to match label encoder
 def normalize_labels(values):
-    labels = pd.Series(values).astype(str).str.strip().str.lower()
-    return labels.apply(lambda x: 1 if ("ddos" in x or "attack" in x or "flood" in x) else 0)
+    labels = pd.Series(values).astype(str).str.strip()
+    return labels.replace(
+        {
+            "NORMAL_ICMP": "benign",
+            "NORMAL_TCP": "benign",
+            "NORMAL_UDP": "benign",
+            "normal_icmp": "benign",
+            "normal_tcp": "benign",
+            "normal_udp": "benign",
+            "normal": "benign",
+            "BENIGN": "benign",
+            "benign": "benign",
+            "Benign": "benign"
+        }
+    )
 
-y_true_encoded = normalize_labels(y_true_raw)
-y_true_binary = y_true_encoded
+y_true_labels = normalize_labels(y_true_raw)
+
+# Binary labels: 0 for benign, 1 for attack
+NORMAL_LABELS = {"benign", "normal"}
+def to_binary_labels(values):
+    normalized = pd.Series(values).astype(str).str.strip().str.lower()
+    return (~normalized.isin(NORMAL_LABELS)).astype(int)
+
+y_true_binary = to_binary_labels(y_true_labels)
+
+# Encode labels using the encoder from training
+y_true_encoded = encoder.transform(y_true_labels)
 
 print(f"\nDataset B Shape        : {df.shape}")
 print(f"Features Shape         : {X.shape}")
-print(f"Unique classes in true: {y_true_encoded.unique()}")
-print("Encoder classes        : ['benign', 'attack']")
+print(f"Unique classes in true: {y_true_labels.unique()}")
+print(f"Encoder classes        : {encoder.classes_}")
 
 # Models to evaluate
 models_dict = {
-    "Random Forest": "models/random_forest.pkl",
-    "XGBoost": "models/xgboost.pkl",
-    "LightGBM": "models/lightgbm.pkl",
-    "CatBoost": "models/catboost.pkl"
+    "Random Forest": "multiclass_pipeline/models/random_forest.pkl",
+    "XGBoost": "multiclass_pipeline/models/xgboost.pkl",
+    "LightGBM": "multiclass_pipeline/models/lightgbm.pkl",
+    "CatBoost": "multiclass_pipeline/models/catboost.pkl"
 }
 
 for model_name, model_path in models_dict.items():
@@ -72,7 +96,29 @@ for model_name, model_path in models_dict.items():
     import numpy as np
     y_pred_encoded = np.array(y_pred_encoded).squeeze()
     
-    y_pred_binary = y_pred_encoded
+    # Invert predictions using label encoder
+    y_pred_labels = encoder.inverse_transform(y_pred_encoded)
+    y_pred_binary = to_binary_labels(y_pred_labels)
+    
+    # -----------------------------
+    # Multiclass Metrics
+    # -----------------------------
+    multiclass_accuracy = accuracy_score(y_true_encoded, y_pred_encoded)
+    multiclass_precision = precision_score(y_true_encoded, y_pred_encoded, average="macro", zero_division=0)
+    multiclass_recall = recall_score(y_true_encoded, y_pred_encoded, average="macro", zero_division=0)
+    multiclass_f1 = f1_score(y_true_encoded, y_pred_encoded, average="macro", zero_division=0)
+    
+    print("\n[MULTICLASS PERFORMANCE]")
+    print(f"Accuracy        : {multiclass_accuracy:.4f}")
+    print(f"Macro Precision : {multiclass_precision:.4f}")
+    print(f"Macro Recall    : {multiclass_recall:.4f}")
+    print(f"Macro F1-Score  : {multiclass_f1:.4f}")
+    
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_true_encoded, y_pred_encoded))
+    
+    print("\nClassification Report:")
+    print(classification_report(y_true_encoded, y_pred_encoded, target_names=encoder.classes_, digits=4, zero_division=0))
     
     # -----------------------------
     # Binary Metrics
@@ -95,10 +141,11 @@ for model_name, model_path in models_dict.items():
     print(classification_report(y_true_binary, y_pred_binary, target_names=["Benign", "Attack"], digits=4, zero_division=0))
     
     # Save predictions for this model
-    class_map = {0: "benign", 1: "attack"}
     pred_df = pd.DataFrame({
-        "Actual_Label": pd.Series(y_true_binary).map(class_map),
-        "Predicted_Label": pd.Series(y_pred_binary).map(class_map),
+        "Actual_Label": y_true_labels,
+        "Predicted_Label": y_pred_labels,
+        "Actual_Encoded": y_true_encoded,
+        "Predicted_Encoded": y_pred_encoded,
         "Actual_Binary": y_true_binary,
         "Predicted_Binary": y_pred_binary
     })

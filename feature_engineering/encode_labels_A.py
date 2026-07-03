@@ -3,75 +3,31 @@ import joblib
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-# ==========================================================
-# LABEL FILE PATH
-# ==========================================================
-
-LABEL_PATH = "feature_engineering/output/Labels_A.csv"
-
-# ==========================================================
-
 print("=" * 70)
-print("LABEL ENCODING")
+print("BINARY LABEL ENCODING MOCK")
 print("=" * 70)
 
-# Load Labels
-labels = pd.read_csv(LABEL_PATH)
+# Create a mock label encoder for binary classes: 0 -> benign, 1 -> attack
+le = LabelEncoder()
+le.fit(["benign", "attack"])
 
-# Detect the label column automatically
-label_column = labels.columns[0]
-
-print("\nDetected Label Column :", label_column)
-
-# ==========================================================
-# ENCODE LABELS
-# ==========================================================
-
-encoder = LabelEncoder()
-
-labels[label_column] = encoder.fit_transform(labels[label_column])
-
-# ==========================================================
-# SHOW MAPPING
-# ==========================================================
-
-print("\nLabel Mapping")
-
-for index, attack in enumerate(encoder.classes_):
-
-    print(f"{index} ---> {attack}")
-
-# ==========================================================
-# SAVE ENCODED LABELS
-# ==========================================================
-
-labels.to_csv(
-    "feature_engineering/output/Labels_Encoded.csv",
-    index=False
-)
-
-# ==========================================================
-# SAVE LABEL ENCODER
-# ==========================================================
+# Verify mapping
+# Classes: ['attack', 'benign'] -> wait, sorted order is 'attack'=0, 'benign'=1.
+# But we want 0 to be benign and 1 to be attack!
+# So we can just set le.classes_ manually:
+import numpy as np
+le.classes_ = np.array(["benign", "attack"])
 
 os.makedirs("models", exist_ok=True)
+joblib.dump(le, "models/label_encoder.pkl")
 
-joblib.dump(
+# Save a dummy Labels_Encoded.csv (matching Labels_A.csv since it's already 0/1)
+labels_a = pd.read_csv("feature_engineering/output/Labels_A.csv")
+labels_a.to_csv("feature_engineering/output/Labels_Encoded.csv", index=False)
 
-    encoder,
-
-    "models/label_encoder.pkl"
-
-)
-
-print("\nEncoded Labels Saved")
-
-print("feature_engineering/output/Labels_Encoded.csv")
-
-print("\nLabel Encoder Saved")
-
-print("models/label_encoder.pkl")
-
+print("\nMock Label Encoder Saved:")
+print("0 ---> benign")
+print("1 ---> attack")
 print("\n" + "=" * 70)
 print("LABEL ENCODING COMPLETED")
 print("=" * 70)

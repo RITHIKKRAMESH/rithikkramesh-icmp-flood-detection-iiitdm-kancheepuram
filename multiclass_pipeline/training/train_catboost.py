@@ -43,7 +43,7 @@ model = CatBoostClassifier(
     iterations=300,
     learning_rate=0.1,
     depth=6,
-    loss_function="Logloss",
+    loss_function="MultiClass",
     random_seed=42,
     verbose=50  # Print progress every 50 iterations
 )

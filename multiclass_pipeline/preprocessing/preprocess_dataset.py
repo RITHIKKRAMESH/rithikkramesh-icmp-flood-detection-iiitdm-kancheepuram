@@ -11,7 +11,7 @@ DATASET_PATH = "dataset/Dataset_A3.csv"
 # ==========================================================
 
 print("=" * 70)
-print("BINARY DATA PREPROCESSING (Dataset A3)")
+print("MULTICLASS DATA PREPROCESSING (Dataset A3)")
 print("=" * 70)
 
 # ==========================================================
@@ -23,21 +23,21 @@ df = pd.read_csv(DATASET_PATH, low_memory=False)
 print("\nOriginal Shape :", df.shape)
 
 # ==========================================================
-# ALIGN LABEL CLASSES TO BINARY (0: Benign, 1: Attack)
+# ALIGN LABEL CLASSES
 # ==========================================================
 
-print("\nConverting Labels to Binary (0: Benign, 1: Attack)...")
+print("\nAligning Labels...")
 
-label_column = "label_binary"
+label_column = "label"
 
-df[label_column] = df["label"].replace({
-    "NORMAL": 0,
-    "TCP_syn_flood_attack": 1,
-    "ICMP_flood_attack": 1,
-    "UDP_flood_attack": 1
+df[label_column] = df[label_column].replace({
+    "TCP_syn_flood_attack": "DDOS_TCP",
+    "ICMP_flood_attack": "DDOS_ICMP",
+    "UDP_flood_attack": "DDOS_UDP",
+    "NORMAL": "benign"
 })
 
-print("\nBinary Class Distribution:")
+print("\nUpdated Class Distribution:")
 print(df[label_column].value_counts())
 
 # ==========================================================
@@ -52,6 +52,7 @@ df["proto"] = df["protocol"].replace({
     "TCP": 6,
     "UDP": 17
 })
+# Handle any other numeric protocol strings if any
 df["proto"] = pd.to_numeric(df["proto"], errors='coerce').fillna(0).astype(int)
 
 print("\nMapping TCP Flags...")
@@ -65,11 +66,13 @@ df["psh"] = df["flag"].str.contains("PSH", case=False).astype(int)
 df["ack"] = df["flag"].str.contains("ACK", case=False).astype(int)
 df["urg"] = df["flag"].str.contains("URG", case=False).astype(int)
 
+# Length column maps to total_length
 df["total_length"] = df["length"]
 
+# Select final aligned packet-header features + label
 selected_cols = [
     'proto', 'total_length', 'src_port', 'dst_port',
-    'fin', 'syn', 'rst', 'psh', 'ack', 'urg', 'label_binary'
+    'fin', 'syn', 'rst', 'psh', 'ack', 'urg', 'label'
 ]
 
 df = df[selected_cols].copy()
@@ -102,6 +105,19 @@ if missing_values > 0:
 print("Shape After Removing Missing Values :", df.shape)
 
 # ==========================================================
+# HANDLE INFINITE VALUES
+# ==========================================================
+
+df.replace([np.inf, -np.inf], np.nan, inplace=True)
+infinite_values = df.isnull().sum().sum()
+
+if infinite_values > 0:
+    df.dropna(inplace=True)
+
+print("\nInfinite Values Handled")
+print("Current Shape :", df.shape)
+
+# ==========================================================
 # OPTIMIZE DATA TYPES & SHUFFLE
 # ==========================================================
 
@@ -113,7 +129,9 @@ int_columns = df.select_dtypes(include=["int64"]).columns
 for col in int_columns:
     df[col] = df[col].astype("int32")
 
-# Shuffle dataset because it is sorted by class
+print("\nData Types Optimized")
+
+# Shuffle dataset because it is sorted by class and has no temporal column
 df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
 # ==========================================================

@@ -48,10 +48,10 @@ if DATASET_SOURCE == "A1":
     df = pd.read_csv("preprocessing/cleaned_dataset/clean_dataset_A.csv")
     sample = df.iloc[SAMPLE_INDEX]
     
-    actual_label_name = sample["label_binary"]
+    actual_label_name = sample["label"]
     
     # Separate features
-    sample_features = sample.drop("label_binary")
+    sample_features = sample.drop("label")
     X_sample = pd.DataFrame([sample_features])[features_schema]
 
 else:  # Dataset B1
@@ -96,9 +96,7 @@ for col in X_sample.columns:
          print(f"{col:<25}: {val}")
 
 print("-" * 50)
-class_names = ["benign", "attack"]
-actual_label_str = class_names[int(actual_label_name)]
-print(f"Actual Label             : {actual_label_str.upper()}")
+print(f"Actual Label             : {actual_label_name.upper()}")
 print("=" * 70)
 
 # ==========================================================
@@ -121,9 +119,13 @@ for name, path in models_dict.items():
     # Ensure prediction is a 1D scalar
     pred_encoded = np.array(pred_encoded).squeeze()
     
-    pred_label_str = class_names[int(pred_encoded)]
-    status = "CORRECT" if pred_label_str.lower() == actual_label_str.lower() else "WRONG"
-    print(f"{name:<20} : Predicted = {pred_label_str.upper():<12} | Status = {status}")
+    # Decode numeric prediction to actual label name
+    pred_label_name = encoder.inverse_transform([pred_encoded])[0]
+    
+    # Check if prediction is correct
+    status = "CORRECT" if pred_label_name.lower() == actual_label_name.lower() else "WRONG"
+    
+    print(f"{name:<20} : Predicted = {pred_label_name.upper():<12} | Status = {status}")
 
 print("-" * 50)
 

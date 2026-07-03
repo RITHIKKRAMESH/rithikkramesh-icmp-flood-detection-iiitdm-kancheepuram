@@ -22,7 +22,7 @@ print("\nOriginal Shape :", df.shape)
 # TARGET COLUMN
 # ==========================================================
 
-TARGET_COLUMN = "label_binary"
+TARGET_COLUMN = "label"
 
 # ==========================================================
 # REMOVE NON-TRAINING COLUMNS
