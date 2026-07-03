@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.csv
+*.pkl
+*.log
+.system_generated/
+catboost_info/
