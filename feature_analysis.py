@@ -1,22 +1,21 @@
 import pandas as pd
 
-df = pd.read_csv("dataset/ICMP_ATTACK_DATASET.csv")
+df = pd.read_csv("dataset/Dataset_A1.csv")
 
 # Remove missing values
 df = df.dropna()
 
-# Remove unnecessary columns
-df = df.drop(columns=[
-    "Flow ID",
-    "Src IP",
-    "Dst IP",
-    "Timestamp"
-])
+# Remove unnecessary columns if they exist
+cols_to_drop = [c for c in ["Flow ID", "Src IP", "Dst IP", "Timestamp"] if c in df.columns]
+if cols_to_drop:
+    df = df.drop(columns=cols_to_drop)
 
 # Encode labels
-df["Label"] = df["Label"].map({
-    "NORMAL": 0,
-    "DDOS": 1
+df["label"] = df["label"].map({
+    "benign": 0,
+    "DDOS_ICMP": 1,
+    "DDOS_TCP": 1,
+    "DDOS_UDP": 1
 })
 
 print("=" * 50)
@@ -33,4 +32,4 @@ print("\nData Types")
 print(df.dtypes.value_counts())
 
 print("\nLabel Distribution")
-print(df["Label"].value_counts())
+print(df["label"].value_counts())

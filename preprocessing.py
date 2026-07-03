@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 # -------------------------------
 print("Loading dataset...")
 
-df = pd.read_csv("dataset/ICMP_ATTACK_DATASET.csv")
+df = pd.read_csv("dataset/Dataset_A1.csv")
 
 print("Dataset Loaded Successfully")
 print("Shape :", df.shape)
@@ -24,14 +24,10 @@ print("Shape after removing missing values:", df.shape)
 # STEP 3 : Remove Unnecessary Columns
 # -------------------------------
 
-columns_to_drop = [
-    "Flow ID",
-    "Src IP",
-    "Dst IP",
-    "Timestamp"
-]
+columns_to_drop = [c for c in ["Flow ID", "Src IP", "Dst IP", "Timestamp"] if c in df.columns]
 
-df = df.drop(columns=columns_to_drop)
+if columns_to_drop:
+    df = df.drop(columns=columns_to_drop)
 
 print("\nColumns removed successfully.")
 
@@ -41,20 +37,22 @@ print("\nColumns removed successfully.")
 
 print("\nEncoding Labels...")
 
-df["Label"] = df["Label"].map({
-    "NORMAL": 0,
-    "DDOS": 1
+df["label"] = df["label"].map({
+    "benign": 0,
+    "DDOS_ICMP": 1,
+    "DDOS_TCP": 1,
+    "DDOS_UDP": 1
 })
 
-print(df["Label"].value_counts())
+print(df["label"].value_counts())
 
 # -------------------------------
 # STEP 5 : Separate Features and Labels
 # -------------------------------
 
-X = df.drop("Label", axis=1)
+X = df.drop("label", axis=1)
 
-y = df["Label"]
+y = df["label"]
 
 print("\nFeatures Shape :", X.shape)
 

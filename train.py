@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load dataset
-df = pd.read_csv("dataset/ICMP_ATTACK_DATASET.csv")
+df = pd.read_csv("dataset/Dataset_A1.csv")
 
 # Basic information
 print("=" * 50)
@@ -24,4 +24,4 @@ print("\n" + "=" * 50)
 print("Data Types:")
 print(df.dtypes)
 
-print(df["Label"].value_counts())
+print(df["label"].value_counts())

@@ -7,33 +7,32 @@ from sklearn.ensemble import RandomForestClassifier
 # -----------------------------
 # Load Dataset
 # -----------------------------
-df = pd.read_csv("dataset/ICMP_ATTACK_DATASET.csv")
+df = pd.read_csv("dataset/Dataset_A1.csv")
 
 # -----------------------------
 # Clean Dataset
 # -----------------------------
 df = df.dropna()
 
-df = df.drop(columns=[
-    "Flow ID",
-    "Src IP",
-    "Dst IP",
-    "Timestamp"
-])
+cols_to_drop = [c for c in ["Flow ID", "Src IP", "Dst IP", "Timestamp"] if c in df.columns]
+if cols_to_drop:
+    df = df.drop(columns=cols_to_drop)
 
 # -----------------------------
 # Encode Labels
 # -----------------------------
-df["Label"] = df["Label"].map({
-    "NORMAL": 0,
-    "DDOS": 1
+df["label"] = df["label"].map({
+    "benign": 0,
+    "DDOS_ICMP": 1,
+    "DDOS_TCP": 1,
+    "DDOS_UDP": 1
 })
 
 # -----------------------------
 # Features and Labels
 # -----------------------------
-X = df.drop("Label", axis=1)
-y = df["Label"]
+X = df.drop("label", axis=1)
+y = df["label"]
 
 # -----------------------------
 # Train-Test Split
@@ -60,6 +59,6 @@ model.fit(X_train, y_train)
 # -----------------------------
 # Save Model
 # -----------------------------
-joblib.dump(model, "models/icmp_ddos_model.pkl")
+joblib.dump(model, "models/random_forest.pkl")
 
 print("Model saved successfully!")

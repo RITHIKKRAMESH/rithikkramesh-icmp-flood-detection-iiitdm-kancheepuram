@@ -4,7 +4,7 @@ import joblib
 
 
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "models" / "icmp_ddos_model.pkl"
+MODEL_PATH = BASE_DIR / "models" / "random_forest.pkl"
 
 
 if not MODEL_PATH.exists():
