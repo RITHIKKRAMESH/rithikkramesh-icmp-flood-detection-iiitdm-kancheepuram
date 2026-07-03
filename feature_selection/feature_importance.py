@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # PATHS
 # ==========================================================
 
-MODEL_PATH = "models/xgboost.pkl"
+MODEL_PATH = "models/lightgbm.pkl"
 FEATURE_PATH = "feature_engineering/output/Features_A.csv"
 
 # ==========================================================
@@ -76,7 +76,7 @@ plt.barh(
 
 plt.xlabel("Importance")
 
-plt.title("Top 20 Feature Importance (XGBoost)")
+plt.title("Top 20 Feature Importance (LightGBM)")
 
 plt.tight_layout()
 

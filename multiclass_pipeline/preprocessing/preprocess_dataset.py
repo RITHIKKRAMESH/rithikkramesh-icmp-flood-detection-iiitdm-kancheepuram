@@ -138,8 +138,8 @@ df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 # SAVE CLEAN DATASET
 # ==========================================================
 
-os.makedirs("preprocessing/cleaned_dataset", exist_ok=True)
-OUTPUT_PATH = "preprocessing/cleaned_dataset/clean_dataset_A.csv"
+os.makedirs("multiclass_pipeline/preprocessing/cleaned_dataset", exist_ok=True)
+OUTPUT_PATH = "multiclass_pipeline/preprocessing/cleaned_dataset/clean_dataset_A.csv"
 df.to_csv(OUTPUT_PATH, index=False)
 
 print("\nClean Dataset Saved Successfully")

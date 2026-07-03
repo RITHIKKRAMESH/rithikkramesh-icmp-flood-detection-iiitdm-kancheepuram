@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 # LABEL FILE PATH
 # ==========================================================
 
-LABEL_PATH = "feature_engineering/output/Labels_A.csv"
+LABEL_PATH = "multiclass_pipeline/feature_engineering/output/Labels_A.csv"
 
 # ==========================================================
 
@@ -46,7 +46,7 @@ for index, attack in enumerate(encoder.classes_):
 # ==========================================================
 
 labels.to_csv(
-    "feature_engineering/output/Labels_Encoded.csv",
+    "multiclass_pipeline/feature_engineering/output/Labels_Encoded.csv",
     index=False
 )
 
@@ -54,23 +54,23 @@ labels.to_csv(
 # SAVE LABEL ENCODER
 # ==========================================================
 
-os.makedirs("models", exist_ok=True)
+os.makedirs("multiclass_pipeline/models", exist_ok=True)
 
 joblib.dump(
 
     encoder,
 
-    "models/label_encoder.pkl"
+    "multiclass_pipeline/models/label_encoder.pkl"
 
 )
 
 print("\nEncoded Labels Saved")
 
-print("feature_engineering/output/Labels_Encoded.csv")
+print("multiclass_pipeline/feature_engineering/output/Labels_Encoded.csv")
 
 print("\nLabel Encoder Saved")
 
-print("models/label_encoder.pkl")
+print("multiclass_pipeline/models/label_encoder.pkl")
 
 print("\n" + "=" * 70)
 print("LABEL ENCODING COMPLETED")

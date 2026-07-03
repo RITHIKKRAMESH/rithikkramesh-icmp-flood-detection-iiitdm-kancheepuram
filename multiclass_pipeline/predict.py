@@ -18,20 +18,20 @@ SAMPLE_INDEX = 47  # Try index 47, 107, 133 for benign in A1!
 # ==========================================================
 
 if DATASET_SOURCE == "A1":
-    ENCODER_PATH = "models/label_encoder.pkl"
+    ENCODER_PATH = "multiclass_pipeline/models/label_encoder.pkl"
     models_dict = {
-        "Random Forest": "models/random_forest.pkl",
-        "XGBoost": "models/xgboost.pkl",
-        "LightGBM": "models/lightgbm.pkl",
-        "CatBoost": "models/catboost.pkl"
+        "Random Forest": "multiclass_pipeline/models/random_forest.pkl",
+        "XGBoost": "multiclass_pipeline/models/xgboost.pkl",
+        "LightGBM": "multiclass_pipeline/models/lightgbm.pkl",
+        "CatBoost": "multiclass_pipeline/models/catboost.pkl"
     }
 else:
-    ENCODER_PATH = "models/label_encoder_B1.pkl"
+    ENCODER_PATH = "multiclass_pipeline/models/label_encoder_B1.pkl"
     models_dict = {
-        "Random Forest": "models/random_forest_B1.pkl",
-        "XGBoost": "models/xgboost_B1.pkl",
-        "LightGBM": "models/lightgbm_B1.pkl",
-        "CatBoost": "models/catboost_B1.pkl"
+        "Random Forest": "multiclass_pipeline/models/random_forest_B1.pkl",
+        "XGBoost": "multiclass_pipeline/models/xgboost_B1.pkl",
+        "LightGBM": "multiclass_pipeline/models/lightgbm_B1.pkl",
+        "CatBoost": "multiclass_pipeline/models/catboost_B1.pkl"
     }
 
 encoder = joblib.load(ENCODER_PATH)
@@ -42,10 +42,10 @@ print("=" * 70)
 
 if DATASET_SOURCE == "A1":
     # Load processed training features to see the schema
-    features_schema = pd.read_csv("feature_engineering/output/Features_A.csv", nrows=0).columns
+    features_schema = pd.read_csv("multiclass_pipeline/feature_engineering/output/Features_A.csv", nrows=0).columns
     
     # Load the clean dataset A1
-    df = pd.read_csv("preprocessing/cleaned_dataset/clean_dataset_A.csv")
+    df = pd.read_csv("multiclass_pipeline/preprocessing/cleaned_dataset/clean_dataset_A.csv")
     sample = df.iloc[SAMPLE_INDEX]
     
     actual_label_name = sample["label"]
@@ -56,7 +56,7 @@ if DATASET_SOURCE == "A1":
 
 else:  # Dataset B1
     # Load mapped features of B1
-    df = pd.read_csv("dataset_B/output/mapped_features_B.csv")
+    df = pd.read_csv("multiclass_pipeline/dataset_B/output/mapped_features_B.csv")
     sample = df.iloc[SAMPLE_INDEX]
     
     # Normalise raw labels in B1 to match training
@@ -135,13 +135,13 @@ print("-" * 50)
 print("\n[Suggested Indices for Testing]:")
 print("-" * 50)
 if DATASET_SOURCE == "A1":
-    print("Dataset: preprocessing/cleaned_dataset/clean_dataset_A.csv")
+    print("Dataset: multiclass_pipeline/preprocessing/cleaned_dataset/clean_dataset_A.csv")
     print("  - BENIGN    : [47, 107, 133, 158, 198]")
     print("  - DDOS_TCP  : [0, 2, 5, 8, 9]")
     print("  - DDOS_UDP  : [1, 7, 12, 17, 19]")
     print("  - DDOS_ICMP : [3, 4, 6, 10, 11]")
 else:
-    print("Dataset: dataset_B/output/mapped_features_B.csv")
+    print("Dataset: multiclass_pipeline/dataset_B/output/mapped_features_B.csv")
     print("  - BENIGN    : [210000, 210001, 210002, 210003, 210004]")
     print("  - DDOS_ICMP : [0, 1, 2, 3, 4]")
     print("  - DDOS_TCP  : [70000, 70001, 70002, 70003, 70004]")
