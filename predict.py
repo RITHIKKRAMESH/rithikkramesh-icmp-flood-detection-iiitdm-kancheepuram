@@ -10,8 +10,8 @@ import numpy as np
 # Choose which dataset to draw the sample from:
 # Option 1: "A1" (Local flow-level dataset)
 # Option 2: "B1" (External packet-level/SDN dataset)
-DATASET_SOURCE = "B1" 
-SAMPLE_INDEX = 25  # The row index of the sample you want to test
+DATASET_SOURCE = "A1" 
+SAMPLE_INDEX = 47  # Try index 47, 107, 133 for benign in A1!
 
 # ==========================================================
 # PATHS AND LOAD DATA
@@ -127,4 +127,23 @@ for name, path in models_dict.items():
     
     print(f"{name:<20} : Predicted = {pred_label_name.upper():<12} | Status = {status}")
 
+print("-" * 50)
+
+# ==========================================================
+# INDEX SUGGESTIONS FOR CONVENIENCE
+# ==========================================================
+print("\n[Suggested Indices for Testing]:")
+print("-" * 50)
+if DATASET_SOURCE == "A1":
+    print("Dataset: preprocessing/cleaned_dataset/clean_dataset_A.csv")
+    print("  - BENIGN    : [47, 107, 133, 158, 198]")
+    print("  - DDOS_TCP  : [0, 2, 5, 8, 9]")
+    print("  - DDOS_UDP  : [1, 7, 12, 17, 19]")
+    print("  - DDOS_ICMP : [3, 4, 6, 10, 11]")
+else:
+    print("Dataset: dataset_B/output/mapped_features_B.csv")
+    print("  - BENIGN    : [210000, 210001, 210002, 210003, 210004]")
+    print("  - DDOS_ICMP : [0, 1, 2, 3, 4]")
+    print("  - DDOS_TCP  : [70000, 70001, 70002, 70003, 70004]")
+    print("  - DDOS_UDP  : [140000, 140001, 140002, 140003, 140004]")
 print("-" * 50)
