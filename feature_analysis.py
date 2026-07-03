@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("dataset/Dataset_A1.csv")
+df = pd.read_csv("dataset/Dataset_A3.csv")
 
 # Remove missing values
 df = df.dropna()

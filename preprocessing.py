@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 # -------------------------------
 print("Loading dataset...")
 
-df = pd.read_csv("dataset/Dataset_A1.csv")
+df = pd.read_csv("dataset/Dataset_A3.csv")
 
 print("Dataset Loaded Successfully")
 print("Shape :", df.shape)

@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load dataset
-df = pd.read_csv("dataset/Dataset_A1.csv")
+df = pd.read_csv("dataset/Dataset_A3.csv")
 
 # Basic information
 print("=" * 50)
