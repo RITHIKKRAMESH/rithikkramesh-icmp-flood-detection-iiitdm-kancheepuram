@@ -1,5 +1,8 @@
 # DDoS Attack Detection and Classification using Ensemble Machine Learning
 
+> 🎓 **Internship Project**  
+> Developed as part of an internship at **IIITDM Kancheepuram** (Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram).
+
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
 [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.4%2B-orange)](https://scikit-learn.org/)
 [![LightGBM](https://img.shields.io/badge/LightGBM-4.3%2B-green)](https://lightgbm.readthedocs.io/)
@@ -162,3 +165,4 @@ python feature_selection/feature_importance.py
 # 10. Start the Real-Time Detection Adapter
 python realtime_adapter.py
 ```
+
