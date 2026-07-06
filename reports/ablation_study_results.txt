@@ -4,28 +4,6 @@ BINARY ABLATION EXPERIMENT RESULT LOG: CORE PACKET HEADERS ONLY
 Ablated Feature Subset (4 features): ['proto', 'total_length', 'src_port', 'dst_port']
 
 --------------------------------------------------------------------------------
-MODEL: Random Forest (Ablated)
---------------------------------------------------------------------------------
-A3 Validation Accuracy: 99.86% | Macro F1-Score: 0.9853
-B3 External Accuracy  : 71.46% | Macro F1-Score: 0.7145
-
-External Confusion Matrix:
-[[155092  54908]
- [ 64954 145046]]
-
-External Classification Report:
-              precision    recall  f1-score   support
-
-      benign     0.7048    0.7385    0.7213    210000
-      attack     0.7254    0.6907    0.7076    210000
-
-    accuracy                         0.7146    420000
-   macro avg     0.7151    0.7146    0.7145    420000
-weighted avg     0.7151    0.7146    0.7145    420000
-
-
-
---------------------------------------------------------------------------------
 MODEL: XGBoost (Ablated)
 --------------------------------------------------------------------------------
 A3 Validation Accuracy: 99.76% | Macro F1-Score: 0.9745

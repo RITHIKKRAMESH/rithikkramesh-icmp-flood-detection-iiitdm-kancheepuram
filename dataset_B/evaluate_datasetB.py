@@ -52,7 +52,6 @@ print("Encoder classes        : ['benign', 'attack']")
 
 # Models to evaluate
 models_dict = {
-    "Random Forest": "models/random_forest.pkl",
     "XGBoost": "models/xgboost.pkl",
     "LightGBM": "models/lightgbm.pkl",
     "CatBoost": "models/catboost.pkl"

@@ -58,13 +58,7 @@ def normalize_labels(values):
 
 y_true_labels = normalize_labels(y_true_raw)
 
-# Binary labels: 0 for benign, 1 for attack
-NORMAL_LABELS = {"benign", "normal"}
-def to_binary_labels(values):
-    normalized = pd.Series(values).astype(str).str.strip().str.lower()
-    return (~normalized.isin(NORMAL_LABELS)).astype(int)
 
-y_true_binary = to_binary_labels(y_true_labels)
 
 # Encode labels using the encoder from training
 y_true_encoded = encoder.transform(y_true_labels)
@@ -76,7 +70,6 @@ print(f"Encoder classes        : {encoder.classes_}")
 
 # Models to evaluate
 models_dict = {
-    "Random Forest": "multiclass_pipeline/models/random_forest.pkl",
     "XGBoost": "multiclass_pipeline/models/xgboost.pkl",
     "LightGBM": "multiclass_pipeline/models/lightgbm.pkl",
     "CatBoost": "multiclass_pipeline/models/catboost.pkl"
@@ -98,7 +91,6 @@ for model_name, model_path in models_dict.items():
     
     # Invert predictions using label encoder
     y_pred_labels = encoder.inverse_transform(y_pred_encoded)
-    y_pred_binary = to_binary_labels(y_pred_labels)
     
     # -----------------------------
     # Multiclass Metrics
@@ -120,34 +112,12 @@ for model_name, model_path in models_dict.items():
     print("\nClassification Report:")
     print(classification_report(y_true_encoded, y_pred_encoded, target_names=encoder.classes_, digits=4, zero_division=0))
     
-    # -----------------------------
-    # Binary Metrics
-    # -----------------------------
-    binary_accuracy = accuracy_score(y_true_binary, y_pred_binary)
-    binary_precision = precision_score(y_true_binary, y_pred_binary, zero_division=0)
-    binary_recall = recall_score(y_true_binary, y_pred_binary, zero_division=0)
-    binary_f1 = f1_score(y_true_binary, y_pred_binary, zero_division=0)
-    
-    print("\n[BINARY PERFORMANCE (Benign vs Attack)]")
-    print(f"Accuracy        : {binary_accuracy:.4f}")
-    print(f"Precision       : {binary_precision:.4f}")
-    print(f"Recall          : {binary_recall:.4f}")
-    print(f"F1-Score        : {binary_f1:.4f}")
-    
-    print("\nConfusion Matrix:")
-    print(confusion_matrix(y_true_binary, y_pred_binary))
-    
-    print("\nClassification Report:")
-    print(classification_report(y_true_binary, y_pred_binary, target_names=["Benign", "Attack"], digits=4, zero_division=0))
-    
     # Save predictions for this model
     pred_df = pd.DataFrame({
         "Actual_Label": y_true_labels,
         "Predicted_Label": y_pred_labels,
         "Actual_Encoded": y_true_encoded,
-        "Predicted_Encoded": y_pred_encoded,
-        "Actual_Binary": y_true_binary,
-        "Predicted_Binary": y_pred_binary
+        "Predicted_Encoded": y_pred_encoded
     })
     
     save_path = os.path.join(OUTPUT_DIR, f"{model_name.lower().replace(' ', '_')}_predictions.csv")

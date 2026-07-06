@@ -48,7 +48,6 @@ X_val_ab = X_val_full[ablated_features]
 X_ext_ab = X_ext[ablated_features]
 
 ab_models = {
-    "Random Forest (Ablated)": RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1),
     "XGBoost (Ablated)": XGBClassifier(n_estimators=100, max_depth=6, random_state=42, eval_metric="logloss"),
     "LightGBM (Ablated)": LGBMClassifier(n_estimators=100, random_state=42, verbose=-1),
     "CatBoost (Ablated)": CatBoostClassifier(iterations=100, learning_rate=0.1, depth=6, random_seed=42, verbose=0)
@@ -104,7 +103,6 @@ gen_results.append("SCENARIO A: Models trained on A3 (binary) evaluated on B3 (b
 
 # Load full-feature models
 full_models = {
-    "Random Forest": "models/random_forest.pkl",
     "XGBoost": "models/xgboost.pkl",
     "LightGBM": "models/lightgbm.pkl",
     "CatBoost": "models/catboost.pkl"

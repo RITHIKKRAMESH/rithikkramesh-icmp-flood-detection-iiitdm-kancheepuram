@@ -30,7 +30,6 @@ Cybersecurity detection models trained on a single laboratory dataset often suff
 │   ├── training_data/              # Chronological splits (70/10/20) & SMOTE balanced sets
 │   ├── split_dataset.py            # Preserves temporal integrity during splits
 │   ├── apply_smote.py              # Balances minority benign classes using SMOTE
-│   ├── train_random_forest.py      # Baseline RF model
 │   ├── train_xgboost.py            # Advanced XGBoost classifier
 │   ├── train_lightgbm.py           # Advanced LightGBM classifier
 │   └── train_catboost.py           # Advanced CatBoost classifier
@@ -78,7 +77,6 @@ All classifiers were evaluated on the independent **Dataset B3** (210,000 Benign
 
 | Model | Accuracy | Benign Recall | Attack Recall | F1-Score | Result |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Random Forest** (Baseline) | 71.89% | 81.02% | 62.76% | 0.6907 | Stably generalizable |
 | **XGBoost** | 64.80% | 29.61% | 100.00% | 0.7397 | High attack recall |
 | **LightGBM** | **73.61%** | **47.22%** | **100.00%** | **0.7912** | **Best Model (Winner)** |
 | **CatBoost** | 48.63% | 30.59% | 66.67% | 0.5648 | Heavy concept shift |
@@ -144,7 +142,6 @@ python training/split_dataset.py
 python training/apply_smote.py
 
 # 5. Train classifiers
-python training/train_random_forest.py
 python training/train_xgboost.py
 python training/train_lightgbm.py
 python training/train_catboost.py

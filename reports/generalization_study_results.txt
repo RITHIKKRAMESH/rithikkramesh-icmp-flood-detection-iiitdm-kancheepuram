@@ -4,28 +4,6 @@ BINARY GENERALIZATION STUDY RESULT LOG (DATASET B3)
 SCENARIO A: Models trained on A3 (binary) evaluated on B3 (binary)
 
 --------------------------------------------------------------------------------
-MODEL: Random Forest (Cross-Domain)
---------------------------------------------------------------------------------
-External Test Accuracy: 71.89%
-Macro F1-Score        : 0.7165
-
-Confusion Matrix:
-[[170145  39855]
- [ 78204 131796]]
-
-Classification Report:
-              precision    recall  f1-score   support
-
-      benign     0.6851    0.8102    0.7424    210000
-      attack     0.7678    0.6276    0.6907    210000
-
-    accuracy                         0.7189    420000
-   macro avg     0.7265    0.7189    0.7165    420000
-weighted avg     0.7265    0.7189    0.7165    420000
-
-
-
---------------------------------------------------------------------------------
 MODEL: XGBoost (Cross-Domain)
 --------------------------------------------------------------------------------
 External Test Accuracy: 64.80%
@@ -93,28 +71,6 @@ weighted avg     0.4843    0.4863    0.4690    420000
 
 ================================================================================
 SCENARIO B: Models trained directly on B3 evaluated on B3 test split
-
---------------------------------------------------------------------------------
-MODEL: Random Forest (Domain-Specific)
---------------------------------------------------------------------------------
-Local Test Accuracy: 54.25%
-Macro F1-Score     : 0.3517
-
-Confusion Matrix:
-[[45572 38428]
- [    0     0]]
-
-Classification Report:
-              precision    recall  f1-score   support
-
-      benign     1.0000    0.5425    0.7034     84000
-      attack     0.0000    0.0000    0.0000         0
-
-    accuracy                         0.5425     84000
-   macro avg     0.5000    0.2713    0.3517     84000
-weighted avg     1.0000    0.5425    0.7034     84000
-
-
 
 --------------------------------------------------------------------------------
 MODEL: XGBoost (Domain-Specific)

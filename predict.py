@@ -10,28 +10,26 @@ import numpy as np
 # Choose which dataset to draw the sample from:
 # Option 1: "A1" (Local flow-level dataset)
 # Option 2: "B1" (External packet-level/SDN dataset)
-DATASET_SOURCE = "A1" 
+DATASET_SOURCE = "A3" 
 SAMPLE_INDEX = 47  # Try index 47, 107, 133 for benign in A1!
 
 # ==========================================================
 # PATHS AND LOAD DATA
 # ==========================================================
 
-if DATASET_SOURCE == "A1":
+if DATASET_SOURCE == "A3":
     ENCODER_PATH = "models/label_encoder.pkl"
     models_dict = {
-        "Random Forest": "models/random_forest.pkl",
         "XGBoost": "models/xgboost.pkl",
         "LightGBM": "models/lightgbm.pkl",
         "CatBoost": "models/catboost.pkl"
     }
 else:
-    ENCODER_PATH = "models/label_encoder_B1.pkl"
+    ENCODER_PATH = "models/label_encoder_B3.pkl"
     models_dict = {
-        "Random Forest": "models/random_forest_B1.pkl",
-        "XGBoost": "models/xgboost_B1.pkl",
-        "LightGBM": "models/lightgbm_B1.pkl",
-        "CatBoost": "models/catboost_B1.pkl"
+        "XGBoost": "models/xgboost_B3.pkl",
+        "LightGBM": "models/lightgbm_B3.pkl",
+        "CatBoost": "models/catboost_B3.pkl"
     }
 
 encoder = joblib.load(ENCODER_PATH)
@@ -40,11 +38,11 @@ print("=" * 70)
 print(f"SINGLE SAMPLE INFERENCE TEST (Dataset Source: {DATASET_SOURCE}, Index: {SAMPLE_INDEX})")
 print("=" * 70)
 
-if DATASET_SOURCE == "A1":
+if DATASET_SOURCE == "A3":
     # Load processed training features to see the schema
     features_schema = pd.read_csv("feature_engineering/output/Features_A.csv", nrows=0).columns
     
-    # Load the clean dataset A1
+    # Load the clean dataset A3
     df = pd.read_csv("preprocessing/cleaned_dataset/clean_dataset_A.csv")
     sample = df.iloc[SAMPLE_INDEX]
     
@@ -54,12 +52,12 @@ if DATASET_SOURCE == "A1":
     sample_features = sample.drop("label_binary")
     X_sample = pd.DataFrame([sample_features])[features_schema]
 
-else:  # Dataset B1
-    # Load mapped features of B1
+else:  # Dataset B3
+    # Load mapped features of B3
     df = pd.read_csv("dataset_B/output/mapped_features_B.csv")
     sample = df.iloc[SAMPLE_INDEX]
     
-    # Normalise raw labels in B1 to match training
+    # Normalise raw labels in B3 to match training
     def normalize_label(val):
         val = str(val).strip()
         mapping = {
