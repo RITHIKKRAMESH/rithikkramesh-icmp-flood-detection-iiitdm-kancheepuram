@@ -83,6 +83,11 @@ All classifiers were evaluated on the independent **Dataset B3** (210,000 Benign
 | **XGBoost** | 64.80% | 29.61% | 100.00% | 0.7397 | High attack recall |
 | **LightGBM** | **73.61%** | **47.22%** | **100.00%** | **0.7912** | **Best Model (Winner)** |
 | **CatBoost** | 48.63% | 30.59% | 66.67% | 0.5648 | Heavy concept shift |
+| **Decision Tree** | 60.94% | 21.89% | 100.00% | 0.7191 | Tree baseline |
+| **AdaBoost** | 66.51% | 66.35% | 66.67% | 0.6656 | Balanced metrics |
+| **Logistic Regression** | 66.67% | 100.00% | 33.33% | 0.5000 | Perfect benign recall |
+| **Gradient Boosting** | 60.94% | 21.89% | 100.00% | 0.7191 | Standard ensemble |
+| **MLP Neural Network** | 47.67% | 62.00% | 33.33% | 0.3891 | Feedforward baseline |
 
 ### 2. Feature Importance Ranking (LightGBM)
 Derived from the best-performing model, the top features ranked by splits importance are:
@@ -148,6 +153,11 @@ python training/apply_smote.py
 python training/train_xgboost.py
 python training/train_lightgbm.py
 python training/train_catboost.py
+python training/train_decision_tree.py
+python training/train_adaboost.py
+python training/train_logistic_regression.py
+python training/train_gradient_boosting.py
+python training/train_mlp.py
 
 # 6. Save LightGBM as best model
 python models/save_best_model.py

@@ -69,6 +69,116 @@ weighted avg     0.4843    0.4863    0.4690    420000
 
 
 
+--------------------------------------------------------------------------------
+MODEL: DecisionTree (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 60.94%
+Macro F1-Score        : 0.5391
+
+Confusion Matrix:
+[[ 45966 164034]
+ [     0 210000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.2189    0.3592    210000
+      attack     0.5614    1.0000    0.7191    210000
+
+    accuracy                         0.6094    420000
+   macro avg     0.7807    0.6094    0.5391    420000
+weighted avg     0.7807    0.6094    0.5391    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: AdaBoost (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 66.51%
+Macro F1-Score        : 0.6651
+
+Confusion Matrix:
+[[139344  70656]
+ [ 70000 140000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.6656    0.6635    0.6646    210000
+      attack     0.6646    0.6667    0.6656    210000
+
+    accuracy                         0.6651    420000
+   macro avg     0.6651    0.6651    0.6651    420000
+weighted avg     0.6651    0.6651    0.6651    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: LogisticRegression (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 66.67%
+Macro F1-Score        : 0.6250
+
+Confusion Matrix:
+[[210000      0]
+ [140000  70000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.6000    1.0000    0.7500    210000
+      attack     1.0000    0.3333    0.5000    210000
+
+    accuracy                         0.6667    420000
+   macro avg     0.8000    0.6667    0.6250    420000
+weighted avg     0.8000    0.6667    0.6250    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: GradientBoosting (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 60.94%
+Macro F1-Score        : 0.5391
+
+Confusion Matrix:
+[[ 45966 164034]
+ [     0 210000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.2189    0.3592    210000
+      attack     0.5614    1.0000    0.7191    210000
+
+    accuracy                         0.6094    420000
+   macro avg     0.7807    0.6094    0.5391    420000
+weighted avg     0.7807    0.6094    0.5391    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: MLP (Cross-Domain)
+--------------------------------------------------------------------------------
+External Test Accuracy: 47.67%
+Macro F1-Score        : 0.4657
+
+Confusion Matrix:
+[[130196  79804]
+ [140000  70000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.4819    0.6200    0.5423    210000
+      attack     0.4673    0.3333    0.3891    210000
+
+    accuracy                         0.4767    420000
+   macro avg     0.4746    0.4767    0.4657    420000
+weighted avg     0.4746    0.4767    0.4657    420000
+
+
+
 ================================================================================
 SCENARIO B: Models trained directly on B3 evaluated on B3 test split
 
@@ -135,5 +245,114 @@ Classification Report:
     accuracy                         0.1730     84000
    macro avg     0.5000    0.0865    0.1475     84000
 weighted avg     1.0000    0.1730    0.2950     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: DecisionTree (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 54.72%
+Macro F1-Score     : 0.3537
+
+Confusion Matrix:
+[[45966 38034]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.5472    0.7074     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.5472     84000
+   macro avg     0.5000    0.2736    0.3537     84000
+weighted avg     1.0000    0.5472    0.7074     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: AdaBoost (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 16.52%
+Macro F1-Score     : 0.1418
+
+Confusion Matrix:
+[[13875 70125]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.1652    0.2835     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.1652     84000
+   macro avg     0.5000    0.0826    0.1418     84000
+weighted avg     1.0000    0.1652    0.2835     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: LogisticRegression (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 100.00%
+Macro F1-Score     : 1.0000
+
+Confusion Matrix:
+[[84000]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    1.0000    1.0000     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         1.0000     84000
+   macro avg     0.5000    0.5000    0.5000     84000
+weighted avg     1.0000    1.0000    1.0000     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: GradientBoosting (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 54.72%
+Macro F1-Score     : 0.3537
+
+Confusion Matrix:
+[[45966 38034]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.5472    0.7074     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.5472     84000
+   macro avg     0.5000    0.2736    0.3537     84000
+weighted avg     1.0000    0.5472    0.7074     84000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: MLP (Domain-Specific)
+--------------------------------------------------------------------------------
+Local Test Accuracy: 14.37%
+Macro F1-Score     : 0.1256
+
+Confusion Matrix:
+[[12070 71930]
+ [    0     0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      benign     1.0000    0.1437    0.2513     84000
+      attack     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.1437     84000
+   macro avg     0.5000    0.0718    0.1256     84000
+weighted avg     1.0000    0.1437    0.2513     84000
 
 

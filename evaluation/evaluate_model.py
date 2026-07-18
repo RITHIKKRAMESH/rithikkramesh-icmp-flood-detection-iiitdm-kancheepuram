@@ -15,7 +15,7 @@ from sklearn.metrics import (
 # PATHS
 # ==========================================================
 
-MODEL_PATH = "models/lightgbm.pkl"
+MODEL_PATH = "models/gradient_boosting.pkl"
 
 X_TEST_PATH = "training/training_data/X_test.csv"
 Y_TEST_PATH = "training/training_data/y_test.csv"
@@ -23,7 +23,7 @@ Y_TEST_PATH = "training/training_data/y_test.csv"
 # ==========================================================
 
 print("=" * 70)
-print("LIGHTGBM MODEL EVALUATION")
+print("CATBOOST MODEL EVALUATION")
 print("=" * 70)
 
 # ==========================================================
@@ -161,5 +161,5 @@ print(
 )
 
 print("\n" + "=" * 70)
-print("LIGHTGBM MODEL EVALUATION COMPLETED")
+print("CATBOOST MODEL EVALUATION COMPLETED")
 print("=" * 70)

@@ -72,7 +72,12 @@ print(f"Encoder classes        : {encoder.classes_}")
 models_dict = {
     "XGBoost": "multiclass_pipeline/models/xgboost.pkl",
     "LightGBM": "multiclass_pipeline/models/lightgbm.pkl",
-    "CatBoost": "multiclass_pipeline/models/catboost.pkl"
+    "CatBoost": "multiclass_pipeline/models/catboost.pkl",
+    "DecisionTree": "multiclass_pipeline/models/decision_tree.pkl",
+    "AdaBoost": "multiclass_pipeline/models/adaboost.pkl",
+    "LogisticRegression": "multiclass_pipeline/models/logistic_regression.pkl",
+    "GradientBoosting": "multiclass_pipeline/models/gradient_boosting.pkl",
+    "MLP": "multiclass_pipeline/models/mlp.pkl"
 }
 
 for model_name, model_path in models_dict.items():

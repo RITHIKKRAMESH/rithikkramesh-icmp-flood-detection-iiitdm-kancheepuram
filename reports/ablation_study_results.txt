@@ -68,3 +68,113 @@ External Classification Report:
 weighted avg     0.2500    0.5000    0.3333    420000
 
 
+
+--------------------------------------------------------------------------------
+MODEL: DecisionTree (Ablated)
+--------------------------------------------------------------------------------
+A3 Validation Accuracy: 99.84% | Macro F1-Score: 0.9832
+B3 External Accuracy  : 50.00% | Macro F1-Score: 0.4857
+
+External Confusion Matrix:
+[[140000  70000]
+ [140000  70000]]
+
+External Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.5000    0.6667    0.5714    210000
+      attack     0.5000    0.3333    0.4000    210000
+
+    accuracy                         0.5000    420000
+   macro avg     0.5000    0.5000    0.4857    420000
+weighted avg     0.5000    0.5000    0.4857    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: AdaBoost (Ablated)
+--------------------------------------------------------------------------------
+A3 Validation Accuracy: 99.95% | Macro F1-Score: 0.9950
+B3 External Accuracy  : 50.00% | Macro F1-Score: 0.3333
+
+External Confusion Matrix:
+[[210000      0]
+ [210000      0]]
+
+External Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.5000    1.0000    0.6667    210000
+      attack     0.0000    0.0000    0.0000    210000
+
+    accuracy                         0.5000    420000
+   macro avg     0.2500    0.5000    0.3333    420000
+weighted avg     0.2500    0.5000    0.3333    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: LogisticRegression (Ablated)
+--------------------------------------------------------------------------------
+A3 Validation Accuracy: 61.39% | Macro F1-Score: 0.4156
+B3 External Accuracy  : 50.00% | Macro F1-Score: 0.4857
+
+External Confusion Matrix:
+[[140000  70000]
+ [140000  70000]]
+
+External Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.5000    0.6667    0.5714    210000
+      attack     0.5000    0.3333    0.4000    210000
+
+    accuracy                         0.5000    420000
+   macro avg     0.5000    0.5000    0.4857    420000
+weighted avg     0.5000    0.5000    0.4857    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: GradientBoosting (Ablated)
+--------------------------------------------------------------------------------
+A3 Validation Accuracy: 99.61% | Macro F1-Score: 0.9603
+B3 External Accuracy  : 68.66% | Macro F1-Score: 0.6737
+
+External Confusion Matrix:
+[[185966  24034]
+ [107575 102425]]
+
+External Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.6335    0.8856    0.7386    210000
+      attack     0.8099    0.4877    0.6088    210000
+
+    accuracy                         0.6866    420000
+   macro avg     0.7217    0.6866    0.6737    420000
+weighted avg     0.7217    0.6866    0.6737    420000
+
+
+
+--------------------------------------------------------------------------------
+MODEL: MLP (Ablated)
+--------------------------------------------------------------------------------
+A3 Validation Accuracy: 99.64% | Macro F1-Score: 0.9626
+B3 External Accuracy  : 50.00% | Macro F1-Score: 0.4857
+
+External Confusion Matrix:
+[[140000  70000]
+ [140000  70000]]
+
+External Classification Report:
+              precision    recall  f1-score   support
+
+      benign     0.5000    0.6667    0.5714    210000
+      attack     0.5000    0.3333    0.4000    210000
+
+    accuracy                         0.5000    420000
+   macro avg     0.5000    0.5000    0.4857    420000
+weighted avg     0.5000    0.5000    0.4857    420000
+
+

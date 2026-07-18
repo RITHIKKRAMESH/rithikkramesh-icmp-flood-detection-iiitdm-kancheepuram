@@ -7,6 +7,13 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 from catboost import CatBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 # Ensure output directory exists
 os.makedirs("reports", exist_ok=True)
@@ -50,7 +57,12 @@ X_ext_ab = X_ext[ablated_features]
 ab_models = {
     "XGBoost (Ablated)": XGBClassifier(n_estimators=100, max_depth=6, random_state=42, eval_metric="logloss"),
     "LightGBM (Ablated)": LGBMClassifier(n_estimators=100, random_state=42, verbose=-1),
-    "CatBoost (Ablated)": CatBoostClassifier(iterations=100, learning_rate=0.1, depth=6, random_seed=42, verbose=0)
+    "CatBoost (Ablated)": CatBoostClassifier(iterations=100, learning_rate=0.1, depth=6, random_seed=42, verbose=0),
+    "DecisionTree (Ablated)": DecisionTreeClassifier(max_depth=12, random_state=42),
+    "AdaBoost (Ablated)": AdaBoostClassifier(n_estimators=100, random_state=42),
+    "LogisticRegression (Ablated)": Pipeline([('scaler', StandardScaler()), ('clf', LogisticRegression(max_iter=1000, random_state=42))]),
+    "GradientBoosting (Ablated)": GradientBoostingClassifier(n_estimators=100, max_depth=3, random_state=42),
+    "MLP (Ablated)": Pipeline([('scaler', StandardScaler()), ('clf', MLPClassifier(hidden_layer_sizes=(64, 32), max_iter=100, early_stopping=True, random_state=42))])
 }
 
 ab_results = []
@@ -105,7 +117,12 @@ gen_results.append("SCENARIO A: Models trained on A3 (binary) evaluated on B3 (b
 full_models = {
     "XGBoost": "models/xgboost.pkl",
     "LightGBM": "models/lightgbm.pkl",
-    "CatBoost": "models/catboost.pkl"
+    "CatBoost": "models/catboost.pkl",
+    "DecisionTree": "models/decision_tree.pkl",
+    "AdaBoost": "models/adaboost.pkl",
+    "LogisticRegression": "models/logistic_regression.pkl",
+    "GradientBoosting": "models/gradient_boosting.pkl",
+    "MLP": "models/mlp.pkl"
 }
 
 for name, path in full_models.items():

@@ -54,7 +54,12 @@ print("Encoder classes        : ['benign', 'attack']")
 models_dict = {
     "XGBoost": "models/xgboost.pkl",
     "LightGBM": "models/lightgbm.pkl",
-    "CatBoost": "models/catboost.pkl"
+    "CatBoost": "models/catboost.pkl",
+    "DecisionTree": "models/decision_tree.pkl",
+    "AdaBoost": "models/adaboost.pkl",
+    "LogisticRegression": "models/logistic_regression.pkl",
+    "GradientBoosting": "models/gradient_boosting.pkl",
+    "MLP": "models/mlp.pkl"
 }
 
 for model_name, model_path in models_dict.items():

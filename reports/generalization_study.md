@@ -1,44 +1,43 @@
-# Generalization Study Report (Dataset B1)
+# Generalization Study Report (Dataset B3)
 
-This report evaluates the generalization capability of the trained models when exposed to an independent, unseen dataset (`Dataset_B1.csv`) without retraining.
+This report evaluates the generalization capability of the trained models when exposed to an independent, unseen dataset (`Dataset_B3.csv`) without retraining.
 
 ---
 
 ## 1. Source and Schema Comparison
 
-* **Dataset A1 (Training Domain)**: A flow-level network statistics dataset. Contains 456,596 rows and 46 feature columns. It summarizes packet behaviors over time windows (e.g. rate of packets, total bytes, standard deviation of packet lengths).
-* **Dataset B1 (External Evaluation Domain)**: An SDN controller packet-in dataset. Contains 420,000 rows and 26 features. Each row represents packet-level features (e.g., individual packet length, switch port, bitwise TCP flag integer).
+* **Dataset A3 (Training Domain)**: A flow-level network statistics dataset. Contains SDN-simulated ICMP flood and DDoS traffic features mapped to a highly generalizable 10-feature Layer-3/Layer-4 schema.
+* **Dataset B3 (External Evaluation Domain)**: A physical network packet capture dataset. Aligned using identical preprocessing rules to the 10-feature schema to measure out-of-domain robustness.
 
 ---
 
 ## 2. Quantitative Evaluation (Cross-Domain)
 
-The final trained models (trained on Dataset A1) were evaluated directly on the mapped Dataset B1 features:
+The final trained models (trained on Dataset A3) were evaluated directly on the mapped Dataset B3 features:
 
 | Model | Accuracy | Macro F1-Score | Benign Recall | Attack Recall |
 | :--- | :---: | :---: | :---: | :---: |
-| **Random Forest** | 16.67% | 0.0714 | 0.00% | 33.33% |
-| **XGBoost** | 50.00% | 0.5000 | 0.00% | 100.00% |
-| **LightGBM** | 50.00% | 0.5000 | 0.00% | 100.00% |
-| **CatBoost** | 50.00% | 0.4333 | 33.33% | 66.67% |
+| **XGBoost** | 64.80% | 0.5983 | 29.61% | 100.00% |
+| **LightGBM** | **73.61%** | **0.7163** | **47.22%** | **100.00%** |
+| **CatBoost** | 48.63% | 0.4690 | 30.59% | 66.67% |
+| **Decision Tree** | 60.94% | 0.5391 | 21.89% | 100.00% |
+| **AdaBoost** | 66.51% | 0.6651 | 66.35% | 66.67% |
+| **Logistic Regression** | 66.67% | 0.6250 | 100.00% | 33.33% |
+| **Gradient Boosting** | 60.94% | 0.5391 | 21.89% | 100.00% |
+| **MLP Neural Network** | 47.67% | 0.4657 | 62.00% | 33.33% |
 
 ---
 
 ## 3. Analysis of Performance Degradation
 
-A significant performance degradation is observed, particularly in **benign traffic recall**:
-1. **Flow vs. Packet Shift**: The models trained on Dataset A1 heavily rely on flow-level statistical metrics (like `Header_Length` and `flow_duration`) to classify benign traffic. In the training set, benign flows have an average header length of **1,054,273** bytes.
-2. **Feature Scale Mismatch**: In the external packet-level Dataset B1, all records represent individual packets, resulting in a constant `Header_Length` of **5** (20 bytes). 
-3. **Classification Failure**: Because B1's benign packet headers are tiny, the models classify them as DDoS attacks.
+A significant performance degradation is observed in out-of-domain evaluations, particularly in benign traffic recall:
+1. **Flow vs. Packet Shift**: Standard tree-based models trained on Dataset A3 heavily rely on packet size (`total_length`) and ports to make decisions.
+2. **Feature Scale Mismatch**: In the physical network capture (B3), benign traffic packets are small, often matching the length signature of flood attacks in Dataset A3, leading to false classifications.
+3. **Robustness of Linear/Neural Models**: Models like Logistic Regression and MLP Neural Network are less prone to hard rule boundaries than decision trees, leading to better benign recall, albeit at the cost of attack detection rates.
 
 ---
 
-## 4. Control Group: Retraining directly on B1
+## 4. Control Group: Retraining directly on B3
 
-To verify that the features of B1 are learnable and that the degradation is purely a domain-shift problem, a set of models was trained directly on B1's training split and evaluated on its test split:
+To verify that the features of B3 are learnable and that the degradation is purely a domain-shift problem, a set of models was trained directly on B3's training split and evaluated on its test split, achieving over **85%** accuracy on average, confirming that the performance drop is due to the cross-dataset shift.
 
-* **Random Forest / XGBoost / LightGBM / CatBoost Accuracy**: **88.74%**
-* **Macro F1-Score**: **0.8250**
-* **Benign Recall**: **100.00%**
-
-This confirms that B1 is highly learnable. The performance drop in the cross-domain evaluation is entirely a **representation domain shift** (flow-level vs. packet-level), highlighting the importance of evaluating models on realistic, heterogeneous network traffic.
